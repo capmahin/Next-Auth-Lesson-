@@ -14,6 +14,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { signInSchema } from "@/lib/zod";
+import LoadingButton from "@/components/loading-button";
 
 export default function SignIn() {
   const form = useForm<z.infer<typeof signInSchema>>({
@@ -72,6 +73,7 @@ export default function SignIn() {
               />
 
               {/* Submit button will go here */}
+              <LoadingButton pending={form.formState.isSubmitting} />
             </form>
           </Form>
         </CardContent>
