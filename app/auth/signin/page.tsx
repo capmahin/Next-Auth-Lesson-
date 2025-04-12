@@ -54,6 +54,7 @@ export default function SignIn() {
               />
 
               <FormField
+                control={form.control}
                 name="password"
                 render={({ field }) => (
                   <FormItem>
