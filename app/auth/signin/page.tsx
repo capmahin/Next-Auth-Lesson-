@@ -24,6 +24,14 @@ export default function SignIn() {
       password: ""
     }
   });
+
+  const onSubmit = async (value: z.infer<typeof signInSchema>) => {
+    try {
+      //handle signin here..
+    } catch (error) {
+      console.log("An unexpected error occurred. please try again");
+    }
+  };
   return (
     <div className="flex items-center justify-center min-h-screen p-4">
       <Card className="w-full max-w-md">
@@ -34,7 +42,7 @@ export default function SignIn() {
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form className="space-y-8">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
               <FormField
                 control={form.control}
                 name="email"
