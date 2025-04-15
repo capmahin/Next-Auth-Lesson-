@@ -15,8 +15,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { signInSchema } from "@/lib/zod";
 import LoadingButton from "@/components/loading-button";
+import { handleCredentialsSignin } from "@/app/actions/authActions";
+import { useState } from "react";
+import ErrorMessage from "@/components/error-message";
 
 export default function SignIn() {
+  const { globalError, setGlobalError } = useState<string>("");
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
@@ -25,9 +29,9 @@ export default function SignIn() {
     }
   });
 
-  const onSubmit = async (value: z.infer<typeof signInSchema>) => {
+  const onSubmit = async (values: z.infer<typeof signInSchema>) => {
     try {
-      //handle signin here..
+      const result = await handleCredentialsSignin(values);
     } catch (error) {
       console.log("An unexpected error occurred. please try again");
     }
@@ -41,6 +45,7 @@ export default function SignIn() {
           </CardTitle>
         </CardHeader>
         <CardContent>
+          {globalError && <ErrorMessage error={globalError} />}
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
               <FormField

@@ -19,7 +19,12 @@ export async function handleCredentialsSignin({
           return {
             message: "Invalid credentials"
           };
+        default:
+          return {
+            message: "Something went wrong"
+          };
       }
     }
+    throw error;
   }
 }
