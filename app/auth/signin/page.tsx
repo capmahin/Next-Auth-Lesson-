@@ -20,7 +20,7 @@ import { useState } from "react";
 import ErrorMessage from "@/components/error-message";
 
 export default function SignIn() {
-  const { globalError, setGlobalError } = useState<string>("");
+  const [globalError, setGlobalError] = useState<string>("");
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
