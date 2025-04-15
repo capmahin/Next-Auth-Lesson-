@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 // import { useSession } from "next-auth/react";
 
 import { auth } from "@/auth";
+import { handleSignOut } from "@/app/actions/authActions";
 
 export default async function Navbar() {
   // const { data: session } = useSession();
@@ -23,7 +24,7 @@ export default async function Navbar() {
           <Button variant="default">Sign In</Button>
         </Link>
       ) : (
-        <form>
+        <form action={handleSignOut}>
           <Button variant="default" type="submit">
             Sign Out
           </Button>

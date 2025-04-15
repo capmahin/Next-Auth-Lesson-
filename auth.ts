@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import async from "./app/page";
+import { signInSchema } from "./lib/zod";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -19,6 +20,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         let user = null;
 
         //validate credentials
+        const parsedCredentials = signInSchema.safeParse(credentials);
+        if (!parsedCredentials.success) {
+          console.error("Invalid credentials:", parsedCredentials.error.errors);
+          return null;
+        }
         //get user
 
         user = {
@@ -35,5 +41,21 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         return user;
       }
     })
-  ]
+  ],
+
+  callbacks: {
+    authorized({ request: { nextUrl }, auth }) {
+      const isLoggedIn = !!auth?.user;
+      const { pathname } = nextUrl;
+      if (pathname.startsWith("/auth/signin") && isLoggedIn) {
+        return Response.redirect(new URL("/", nextUrl));
+      }
+
+      return !!auth;
+    }
+  },
+
+  pages: {
+    signIn: "/auth/signin"
+  }
 });

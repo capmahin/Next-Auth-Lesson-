@@ -28,3 +28,7 @@ export async function handleCredentialsSignin({
     throw error;
   }
 }
+
+export async function handleSignOut() {
+  await signOut();
+}
