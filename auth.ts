@@ -1,10 +1,13 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import async from "./app/page";
+
+import GitHub from "next-auth/providers/github";
 import { signInSchema } from "./lib/zod";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
+    GitHub,
     Credentials({
       credentials: {
         email: { label: "Email", type: "email", placeholder: "Email" },
