@@ -15,9 +15,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { signInSchema } from "@/lib/zod";
 import LoadingButton from "@/components/loading-button";
-import { handleCredentialsSignin } from "@/app/actions/authActions";
+import {
+  handleCredentialsSignin,
+  handleGitHubSignin
+} from "@/app/actions/authActions";
 import { useState } from "react";
 import ErrorMessage from "@/components/error-message";
+import { Button } from "@/components/ui/button";
+import { GithubIcon } from "lucide-react";
 
 export default function SignIn() {
   const [globalError, setGlobalError] = useState<string>("");
@@ -89,6 +94,15 @@ export default function SignIn() {
               <LoadingButton pending={form.formState.isSubmitting} />
             </form>
           </Form>
+          <span className="text-sm text-gray-500 text-center block my-2">
+            or
+          </span>
+          <form className="w-full" action={handleGitHubSignin}>
+            <Button variant="outline" className="w-full" type="submit">
+              <GithubIcon className="h-4 w-4 mr-2" />
+              SIgn in with Github
+            </Button>
+          </form>
         </CardContent>
       </Card>
     </div>

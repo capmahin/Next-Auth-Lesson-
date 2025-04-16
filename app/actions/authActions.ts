@@ -29,6 +29,10 @@ export async function handleCredentialsSignin({
   }
 }
 
+export async function handleGitHubSignin() {
+  await signIn("github", { redirectTo: "/" });
+}
+
 export async function handleSignOut() {
   await signOut();
 }
